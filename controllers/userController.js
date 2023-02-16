@@ -1,29 +1,22 @@
 const UserModel = require("../models/user");
 
 exports.createUser = async (req, res) => {
-    const user = new UserModel({
-        _id: req.body.rfid,
-        name: req.body.name,
-        number: req.body.number,
-        dob: req.body.dob,
-        pin: req.body.pin,
-        address: req.body.address,
-    });
+    const user = new UserModel(req.body);
 
     try {
         const document = await user.save();
         res.status(200).json(document);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 
 exports.verifyCardUser = async (req, res) => {
     try {
-        const data = await UserModel.findById(req.body.rfid.toLowerCase());
+        const data = await UserModel.findOne({ gooonjId: req.body.gooonjId });
         if (data === null)
             res.status(400).json({
-                message: "RFID not found",
+                message: "GooonjID not found",
                 authenticated: false,
             });
         else if (data["pin"] !== req.body.pin)

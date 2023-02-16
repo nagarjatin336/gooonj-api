@@ -8,8 +8,8 @@ const CashlessController = require("./controllers/cardlessController");
 router.post("/createUser", UserController.createUser);
 router.post("/verifyUser/card", UserController.verifyCardUser);
 
-router.post("/verifyUser/cardless", CashlessController.verifyCardlessUser);
 router.post("/createCardless", CashlessController.createCardless);
+router.post("/verifyUser/cardless", CashlessController.verifyCardlessUser);
 
 router.post("/createMachine", MachineController.createMachine);
 

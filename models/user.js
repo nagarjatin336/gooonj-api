@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
 const withdrawSchema = new mongoose.Schema({
-    machine: { type: mongoose.Schema.Types.ObjectId, ref: "Machine" },
+    machineId: { type: mongoose.Schema.Types.ObjectId, ref: "Machine" },
     time: { type: Date, default: Date.now },
     questions: [{ question: String, answer: Boolean }],
 });
 
 const userSchema = new mongoose.Schema({
-    gid: {
+    gooonjId: {
         type: String,
         lowercase: true,
     },

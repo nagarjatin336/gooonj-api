@@ -1,11 +1,26 @@
 const CardlessModel = require("../models/cardless");
 
+exports.createCardless = async (req, res) => {
+    const cardless = new CardlessModel({
+        refId: generateRandomNumberSequence(8),
+        otp: generateRandomNumberSequence(5),
+        userId: req.body.userId,
+    });
+
+    try {
+        const document = await cardless.save();
+        res.status(200).json(document);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.verifyCardlessUser = async (req, res) => {
     try {
-        const data = await CardlessModel.findById(req.body.rfid.toLowerCase());
+        const data = await CardlessModel.findOne({ refId: req.body.refId });
         if (data === null)
             res.status(400).json({
-                message: "RFID not found",
+                message: "Reference ID not found",
                 authenticated: false,
             });
         else if (data["otp"] !== req.body.otp)
@@ -14,21 +29,6 @@ exports.verifyCardlessUser = async (req, res) => {
                 authenticated: false,
             });
         else res.status(200).json({ authenticated: true });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-exports.createCardless = async (req, res) => {
-    const cardless = new CardlessModel({
-        _id: generateRandomNumberSequence(8),
-        userId: req.body.rfid,
-        pin: generateRandomNumberSequence(5),
-    });
-
-    try {
-        const document = await cardless.save();
-        res.status(200).json(document);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
