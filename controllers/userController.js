@@ -9,6 +9,15 @@ exports.getUser = async (req, res) => {
     }
 };
 
+exports.getAllUsers = async (_, res) => {
+    try {
+        const documents = await UserModel.find();
+        res.json({ users: documents });
+    } catch (error) {
+        res.status(200).json({ message: error.message });
+    }
+};
+
 exports.createUser = async (req, res) => {
     const user = new UserModel(req.body);
 

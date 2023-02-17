@@ -7,6 +7,7 @@ const MachineController = require("./controllers/machineController");
 const UserController = require("./controllers/userController");
 
 router.get("/user/:id", UserController.getUser);
+router.get("/users", UserController.getAllUsers);
 router.post("/createUser", UserController.createUser);
 router.post("/verifyUser/card", UserController.verifyCardUser);
 
