@@ -3,7 +3,7 @@ const CardlessModel = require("../models/cardless");
 exports.createCardless = async (req, res) => {
     const cardless = new CardlessModel({
         refId: generateRandomNumberSequence(8),
-        otp: generateRandomNumberSequence(5),
+        otp: generateRandomNumberSequence(4),
         userId: req.body.userId,
     });
 

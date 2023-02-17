@@ -1,5 +1,14 @@
 const UserModel = require("../models/user");
 
+exports.getUser = async (req, res) => {
+    try {
+        const document = await UserModel.findById(req.params.id);
+        res.json(document);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.createUser = async (req, res) => {
     const user = new UserModel(req.body);
 
@@ -24,7 +33,7 @@ exports.verifyCardUser = async (req, res) => {
                 message: "Incorrect PIN",
                 authenticated: false,
             });
-        else res.status(200).json({ authenticated: true });
+        else res.status(200).json({ authenticated: true, userId: data["id"] });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
